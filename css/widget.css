@@ -1,0 +1,23 @@
+.waf-widget.waf-audiorecorder { }
+.waf-widget.waf-audiorecorder>canvas {
+    width: 100%; height: 100%;
+}
+.waf-widget.waf-audiorecorder>div {
+    position: absolute;
+    top: 3px; left: 3px; right: 3px;
+    color: white;
+}
+.waf-widget.waf-audiorecorder>div>span {
+    font-size: 1.2em;
+}
+.waf-widget.waf-audiorecorder button { float: right; }
+.waf-widget.waf-audiorecorder button span { display: inline-block; }
+
+.waf-audiorecorder-play    span:before { content: "▶" }
+.waf-audiorecorder-record  span:before { content: "◉" }
+.waf-audiorecorder-stop    span:before { content: "▇" }
+.waf-audiorecorder-capture span:before { content: "◉" }
+
+.waf-state-play    .waf-audiorecorder-play    span:before { color: green; }
+.waf-state-record  .waf-audiorecorder-record  span:before { color: red;   }
+.waf-state-capture .waf-audiorecorder-capture span:before { color: green; }
