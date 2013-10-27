@@ -54,6 +54,7 @@ function clear(){
   recLength = 0;
   recBuffersL = [];
   recBuffersR = [];
+  this.postMessage();
 }
 
 function mergeBuffers(recBuffers, recLength){

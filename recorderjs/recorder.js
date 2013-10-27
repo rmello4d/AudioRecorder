@@ -68,7 +68,8 @@ DEALINGS IN THE SOFTWARE.
       recording = false;
     }
 
-    this.clear = function(){
+    this.clear = function(cb){
+      currCallback = cb || config.callback;
       worker.postMessage({ command: 'clear' });
     }
 

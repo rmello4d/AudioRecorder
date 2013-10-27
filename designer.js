@@ -7,8 +7,8 @@
         typeValue   : 'datasource'
 	}]);
 
-	AudioRecorder.setWidth('100');
-	AudioRecorder.setHeight('70');
+	AudioRecorder.setWidth('200');
+	AudioRecorder.setHeight('100');
 
     AudioRecorder.addEvent({ 'name': 'Change' });
     AudioRecorder.addEvent({ 'name': 'Play' });

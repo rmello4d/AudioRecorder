@@ -86,12 +86,13 @@
             // connect to the analyser
             this.inputPoint.connect(this.analyserNode);
             this.startAnalyser();
+
+            this._capture = true;
+            this.addClass('waf-state-capture');
+            this.fire(new Event.Capture({}));
+
             if(callback) callback();
         }
-        
-        this._capture = true;
-        this.addClass('waf-state-capture');
-        this.fire(new Event.Capture({}));
     };
 
     AudioRecorder.prototype.stopCapture = function() {
@@ -99,7 +100,7 @@
         if(this.recording()) this.stop();
         
         if(this.inputPoint)
-            this.inputPoint.disconnect();
+            this.analyserNode.disconnect();
         
         // stop analyser animation
         this.stopAnalyser();
@@ -111,11 +112,11 @@
 
     AudioRecorder.prototype._gotStream = function(callback, stream) {
         // Create an AudioNode from the stream.
-        var audioInput = this.audioContext.createMediaStreamSource(stream);
+        this.audioInput = this.audioContext.createMediaStreamSource(stream);
         
         // Create a point to plus the recorder
         this.inputPoint = this.audioContext.createGain();
-        audioInput.connect(this.inputPoint);
+        this.audioInput.connect(this.inputPoint);
         // we need to specify the path to recorder worker
         // this shouldn't work if we use the widget outside a Wakanda Server
         this.audioRecorder = new Recorder(this.inputPoint, { workerPath: "/widgets-custom/AudioRecorder/recorderjs/recorderWorker.js" });
@@ -126,6 +127,10 @@
         // start analyser animation
         this.startAnalyser();
 
+        
+        this._capture = true;
+        this.addClass('waf-state-capture');
+        this.fire(new Event.Capture({}));
 
         if(callback) callback();
     }
@@ -190,9 +195,10 @@
         this._recording = new Date().getTime();
         this.addClass('waf-state-record');
 
-        this.audioRecorder.clear();
-        this.audioRecorder.record();
-        this.fire(new Event.Record({}));
+        this.audioRecorder.clear(function() {
+            this.audioRecorder.record();
+            this.fire(new Event.Record({}));
+        }.bind(this));
     };
 
     AudioRecorder.prototype.stop = function() {
@@ -205,10 +211,10 @@
                 var f = new FileReader();
                 f.onload = function() {
                     this.value(f.result);
+                    this.fire(new Event.StopRecording({}));
                 }.bind(this);
                 f.readAsDataURL(blob);
             }.bind(this));
-            this.fire(new Event.StopRecording({}));
         }
         if(this.playing()) {
             this.player.pause();
