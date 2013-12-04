@@ -1,5 +1,4 @@
-(function() {
-    var AudioRecorder = Widget.AudioRecorder.inherit(WAF.require('waf-behavior/studio'));
+(function(AudioRecorder) {
 
     AudioRecorder.addAttributes([{
         name        : 'data-binding-value',
@@ -18,4 +17,4 @@
     AudioRecorder.addEvent({ 'name': 'Capture' });
     AudioRecorder.addEvent({ 'name': 'StopCapture' });
 
-})();
+});

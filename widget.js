@@ -1,4 +1,4 @@
-(function() {
+WAF.define('AudioRecorder', function() {
     var widget = WAF.require('waf-core/widget');
     var AudioRecorder = widget.create('AudioRecorder');
 
@@ -10,20 +10,12 @@
     if (!navigator.requestAnimationFrame)
         navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
 
-    var Event = WAF.require('waf-core/event');
-    Event.create('Play');
-    Event.create('StopPlaying');
-    Event.create('Record');
-    Event.create('StopRecording');
-    Event.create('Capture');
-    Event.create('StopCapture');
-
     AudioRecorder.prototype.init = function() {
         if(window.AudioContext)
             this.audioContext = new AudioContext();
 
         // Setup HTML
-        // This widget isn't a container, so we can just delete everything
+        // This widget isn't a container, so lets override the node
         this.node.innerHTML = '<canvas></canvas>' +
         '    <div>' +
         '        <span></span>' +
@@ -89,7 +81,7 @@
 
             this._capture = true;
             this.addClass('waf-state-capture');
-            this.fire(new Event.Capture({}));
+            this.fire('capture', {});
 
             if(callback) callback();
         }
@@ -107,7 +99,7 @@
 
         this._capture = false;
         this.removeClass('waf-state-capture');
-        this.fire(new Event.StopCapture({}));
+        this.fire('stopCapture', {});
     };
 
     AudioRecorder.prototype._gotStream = function(callback, stream) {
@@ -130,7 +122,7 @@
         
         this._capture = true;
         this.addClass('waf-state-capture');
-        this.fire(new Event.Capture({}));
+        this.fire('capture', {});
 
         if(callback) callback();
     }
@@ -197,7 +189,7 @@
 
         this.audioRecorder.clear(function() {
             this.audioRecorder.record();
-            this.fire(new Event.Record({}));
+            this.fire('record', {});
         }.bind(this));
     };
 
@@ -211,7 +203,7 @@
                 var f = new FileReader();
                 f.onload = function() {
                     this.value(f.result);
-                    this.fire(new Event.StopRecording({}));
+                    this.fire('stopRecording', {});
                 }.bind(this);
                 f.readAsDataURL(blob);
             }.bind(this));
@@ -222,7 +214,7 @@
             this.removeClass('waf-state-play');
 
             this.stopAnalyser();
-            this.fire(new Event.StopPlaying({}));
+            this.fire('stopPlaying', {});
         }
     };
 
@@ -237,7 +229,7 @@
         this.playerInput.connect(this.audioContext.destination);
         this.startAnalyser();
         this.player.play();
-        this.fire(new Event.Play({}));
+        this.fire('play', {});
     }
 
     AudioRecorder.prototype.playing = function() {
@@ -249,7 +241,7 @@
     }
 
     AudioRecorder.addProperty('value', {
-        setter: function(url) {
+        onChange: function(url) {
             console.log(url);
             if(url != this.player.src)
                 this.player.src = url || '';
@@ -284,4 +276,5 @@
         this._timeout_interface = setTimeout(this.updateInterface.bind(this), 200);
     };
 
-})();
+	return AudioRecorder;
+});
