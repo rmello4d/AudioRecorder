@@ -15,12 +15,12 @@ This is a simple example that include also a graphical representation of the sou
 ### Events (widget.js)
 
 ```
-    Event.create('Play');
-    Event.create('StopPlaying');
-    Event.create('Record');
-    Event.create('StopRecording');
-    Event.create('Capture');
-    Event.create('StopCapture');
+    Event.create('play');
+    Event.create('stopPlaying');
+    Event.create('record');
+    Event.create('stopRecording');
+    Event.create('capture');
+    Event.create('stopCapture');
 
 
 ```
