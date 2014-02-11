@@ -9,12 +9,12 @@
 	AudioRecorder.setWidth('200');
 	AudioRecorder.setHeight('100');
 
-    AudioRecorder.addEvent({ 'name': 'Change' });
-    AudioRecorder.addEvent({ 'name': 'Play' });
-    AudioRecorder.addEvent({ 'name': 'StopPlaying' });
-    AudioRecorder.addEvent({ 'name': 'Record' });
-    AudioRecorder.addEvent({ 'name': 'StopRecording' });
-    AudioRecorder.addEvent({ 'name': 'Capture' });
-    AudioRecorder.addEvent({ 'name': 'StopCapture' });
+    AudioRecorder.addEvent({ 'name': 'change' });
+    AudioRecorder.addEvent({ 'name': 'play' });
+    AudioRecorder.addEvent({ 'name': 'stopPlaying' });
+    AudioRecorder.addEvent({ 'name': 'record' });
+    AudioRecorder.addEvent({ 'name': 'stopRecording' });
+    AudioRecorder.addEvent({ 'name': 'capture' });
+    AudioRecorder.addEvent({ 'name': 'stopCapture' });
 
 });
