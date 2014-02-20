@@ -242,7 +242,7 @@ WAF.define('AudioRecorder', function() {
 
     AudioRecorder.addProperty('value', {
         onChange: function(url) {
-            console.log(url);
+            if(!this.player) return;
             if(url != this.player.src)
                 this.player.src = url || '';
         }
