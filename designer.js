@@ -1,11 +1,11 @@
 (function(AudioRecorder) {
 
-    AudioRecorder.addAttributes([{
+  /*  AudioRecorder.addAttributes([{
         name        : 'data-binding-value',
         description : 'Source',
         typeValue   : 'datasource'
 	}]);
-
+*/
 	AudioRecorder.setWidth('200');
 	AudioRecorder.setHeight('100');
 
