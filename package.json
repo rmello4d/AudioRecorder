@@ -10,7 +10,7 @@
     },
     "keywords": ["wakanda", "widget"],
     "engines": {
-        "wakanda": ">= 6"
+        "wakanda": ["6", "7", "8", "9"]
     },
     "license": "MIT",
     "loadDependencies": [{
